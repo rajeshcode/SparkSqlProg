@@ -1,17 +1,19 @@
 import java.io.File
 
 import org.apache.hadoop.hive.metastore.api.{MetaException, NoSuchObjectException}
+import org.apache.spark.sql.SparkSession
+//import org.apache.hadoop.hive.ql.exec.spark.session.SparkSession
 import org.apache.hadoop.hive.ql.metadata.HiveException
+//import org.apache.hadoop.hive.ql.parse.ParseException
 import org.apache.log4j.Logger
 import org.apache.spark.sql.catalyst.parser.ParseException
 import org.apache.spark.sql.execution.QueryExecutionException
-//import sun.util.logging.resources.logging-logging
-
 
 import scala.io.Source
 
+//import sun.util.logging.resources.logging-logging
+
 //import com.sun.tools.javac.code.Source
-import org.apache.spark.sql.SparkSession
 
 
   //import org.apache.spark.sql.Row
@@ -75,7 +77,6 @@ import org.apache.spark.sql.SparkSession
       //val bufferedSource = Source.fromFile(filename).getLines.mkString
 
       //import spark.implicits._
-      import spark.sql
 
       // define an accumulable collection for exceptions
       //val accumulable = sc.accumulableCollection(mutable.HashSet[(Any, Throwable)]())
