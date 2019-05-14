@@ -1,0 +1,66 @@
+import java.io.File
+
+import scala.io.Source
+
+//import com.sun.tools.javac.code.Source
+import org.apache.spark.sql.SparkSession
+
+
+  //import org.apache.spark.sql.Row
+  // $example on:init_session$
+  //import org.apache.spark.sql.SparkSession
+  // $example off:init_session$
+  // $example on:programmatic_schema$
+  // $example on:data_types$
+  //import org.apache.spark.sql.types._
+  // $example off:data_types$
+  // $example off:programmatic_schema$
+
+ object SparkSqlUpdater {
+
+    def main(args: Array[String]): Unit = {
+      println("Hello World!")
+      if (args.length == 0) {
+        println("dude, Please give file filename as one parameter")
+      }
+      val filename = args(0)
+      //val filename = "fileopen.scala"
+
+      val warehouseLocation = new File("spark-warehouse").getAbsolutePath
+
+      val spark = SparkSession
+        .builder()
+        .appName("Spark Hive Example")
+        .config("spark.sql.warehouse.dir", warehouseLocation)
+        .enableHiveSupport()
+        .getOrCreate()
+
+
+      for (line <- Source.fromFile(filename).getLines) {
+        println(line)
+      }
+      //Lines into Arrays
+//    val lines = Source.fromFile("/Users/Al/.bash_profile").getLines.toList
+//    val lines = Source.fromFile("/Users/Al/.bash_profile").getLines.toArray
+
+      //val bufferedSource = Source.fromFile("example.txt")
+      val bufferedSource = Source.fromFile(filename)
+      //import spark.implicits._
+      import spark.sql
+      for (line <- bufferedSource.getLines) {
+        println(line.toUpperCase)
+        sql("show tables").show()
+        sql(line)
+        //val dataDir = "/tmp/parquet_data"
+        //spark.range(10).write.parquet(dataDir)
+      }
+
+      bufferedSource.close
+      spark.stop()
+
+
+    }
+
+
+  }
+
