@@ -27,9 +27,6 @@ class SparkSqlProg {
       .enableHiveSupport()
       .getOrCreate()
 
-    import spark.implicits._
-    import spark.sql
-
 
     sql("show tables").show()
     val dataDir = "/tmp/parquet_data"
